@@ -3,7 +3,6 @@ import { Rail } from "@/components/layout/Rail";
 import { Section } from "@/components/layout/Section";
 import { TopBar } from "@/components/layout/TopBar";
 import { Hero } from "@/components/hero/Hero";
-import { Principles } from "@/components/principles/Principles";
 
 export default function Home() {
   return (
@@ -14,8 +13,8 @@ export default function Home() {
         <Section id="boot" index="00">
           <Hero />
         </Section>
-        <Section id="principles" index="01">
-          <Principles />
+        <Section id="process" index="01" title="Process">
+          <div />
         </Section>
         <Section id="stack" index="02" title="Stack">
           <div />
