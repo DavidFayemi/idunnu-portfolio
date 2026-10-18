@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useCursorVariant } from "@/components/motion/CursorProvider";
 
 const chapters = [
   { id: "boot", label: "00 / BOOT" },
@@ -12,6 +13,7 @@ const chapters = [
 
 export function Rail() {
   const [activeChapter, setActiveChapter] = useState("boot");
+  const cursorProps = useCursorVariant("link");
 
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-chapter]"));
@@ -42,6 +44,7 @@ export function Rail() {
               className={`border-l px-3 py-1 transition-colors focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-accent ${
                 isActive ? "border-accent text-accent" : "border-transparent text-muted hover:text-fg"
               }`}
+              {...cursorProps}
             >
               {chapter.label}
             </a>

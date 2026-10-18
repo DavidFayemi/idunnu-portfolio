@@ -3,7 +3,11 @@ import type { Viewport } from "next";
 import { Inter, JetBrains_Mono, Syne } from "next/font/google";
 import type { ReactNode } from "react";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { CursorProvider } from "@/components/motion/CursorProvider";
+import { Cursor } from "@/components/motion/Cursor";
 import "./globals.css";
+import Script from "next/script";
+// inside <head> or at the top of <body> in layout.tsx:
 
 const syne = Syne({
   weight: ["600", "700"],
@@ -26,10 +30,12 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "[YOUR NAME] | Full-Stack Engineer",
-  description: "Full-stack engineer crafting thoughtful digital experiences with code.",
+  description:
+    "Full-stack engineer crafting thoughtful digital experiences with code.",
   openGraph: {
     title: "[YOUR NAME] | Full-Stack Engineer",
-    description: "Full-stack engineer crafting thoughtful digital experiences with code.",
+    description:
+      "Full-stack engineer crafting thoughtful digital experiences with code.",
     type: "website",
   },
 };
@@ -51,12 +57,22 @@ const themeScript = `
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${syne.variable} ${inter.variable} ${jetbrains.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${syne.variable} ${inter.variable} ${jetbrains.variable}`}
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`(function(){try{var t=localStorage.getItem('theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();`}
+        </Script>
       </head>
       <body className="min-h-screen bg-bg text-fg">
-        <SmoothScroll>{children}</SmoothScroll>
+        <CursorProvider>
+          <SmoothScroll>{children}</SmoothScroll>
+          <Cursor />
+        </CursorProvider>
       </body>
     </html>
   );

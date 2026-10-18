@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useSyncExternalStore } from "react";
+import { useCursorVariant } from "@/components/motion/CursorProvider";
 
 type Theme = "light" | "dark";
 
@@ -23,6 +24,7 @@ function getServerSnapshot(): Theme {
 
 export function ThemeToggle() {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const cursorProps = useCursorVariant("link");
 
   const toggle = useCallback(() => {
     const next: Theme = theme === "dark" ? "light" : "dark";
@@ -36,6 +38,7 @@ export function ThemeToggle() {
 
   return (
     <button
+      {...cursorProps}
       type="button"
       aria-label="Toggle color theme"
       aria-pressed={theme === "light"}

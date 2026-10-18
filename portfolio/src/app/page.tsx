@@ -2,6 +2,8 @@ import { Footer } from "@/components/layout/Footer";
 import { Rail } from "@/components/layout/Rail";
 import { Section } from "@/components/layout/Section";
 import { TopBar } from "@/components/layout/TopBar";
+import { Hero } from "@/components/hero/Hero";
+import { Principles } from "@/components/principles/Principles";
 
 export default function Home() {
   return (
@@ -9,11 +11,11 @@ export default function Home() {
       <TopBar />
       <Rail />
       <main className="pt-16">
-        <Section id="boot" index="00" title="Boot">
-          <div />
+        <Section id="boot" index="00">
+          <Hero />
         </Section>
-        <Section id="principles" index="01" title="Principles">
-          <div />
+        <Section id="principles" index="01">
+          <Principles />
         </Section>
         <Section id="stack" index="02" title="Stack">
           <div />
