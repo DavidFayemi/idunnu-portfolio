@@ -4,15 +4,15 @@ import { useEffect, useState } from "react";
 import { useCursorVariant } from "@/components/motion/CursorProvider";
 
 const chapters = [
-  { id: "boot", label: "00 / BOOT" },
-  { id: "principles", label: "01 / PRINCIPLES" },
-  { id: "stack", label: "02 / STACK" },
-  { id: "work", label: "03 / WORK" },
-  { id: "contact", label: "04 / CONTACT" },
+  { id: "hero", label: "00 HELLO" },
+  { id: "process", label: "01 PROCESS" },
+  { id: "work", label: "02 WORK" },
+  { id: "about", label: "03 ABOUT" },
+  { id: "contact", label: "04 CONTACT" },
 ];
 
 export function Rail() {
-  const [activeChapter, setActiveChapter] = useState("boot");
+  const [activeChapter, setActiveChapter] = useState("hero");
   const cursorProps = useCursorVariant("link");
 
   useEffect(() => {

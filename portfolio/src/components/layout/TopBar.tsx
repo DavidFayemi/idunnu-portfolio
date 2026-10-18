@@ -19,7 +19,7 @@ export function TopBar() {
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-2 font-mono text-xs text-muted">
             <span className="h-1.5 w-1.5 animate-[pulse_2s_ease-in-out_infinite] rounded-full bg-accent" aria-hidden="true" />
-            AVAILABLE FOR WORK
+            {site.statusText}
           </span>
           <ThemeToggle />
         </div>

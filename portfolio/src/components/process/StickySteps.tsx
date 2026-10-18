@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useMediaQuery } from "@/lib/useMediaQuery";
 
 export type StickyStep = {
   id: string;
@@ -17,6 +18,7 @@ function StickyStepScene({ step }: { step: StickyStep }) {
     offset: ["start start", "end end"],
   });
   const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 
   return (
     <article
@@ -33,18 +35,22 @@ function StickyStepScene({ step }: { step: StickyStep }) {
         <div className="mt-8 h-32 w-px bg-border">
           <motion.div
             className="h-full w-px origin-top bg-accent"
-            style={{ scaleY }}
+            style={reducedMotion ? { scaleY: 1 } : { scaleY }}
           />
         </div>
       </div>
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{
-          duration: 0.7,
-          ease: [0.16, 1, 0.3, 1],
-        }}
+        initial={reducedMotion ? false : { opacity: 0, y: 30 }}
+        whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
+        viewport={reducedMotion ? undefined : { once: true, amount: 0.3 }}
+        transition={
+          reducedMotion
+            ? undefined
+            : {
+                duration: 0.7,
+                ease: [0.16, 1, 0.3, 1],
+              }
+        }
         className="lg:col-span-8 lg:pt-[20vh]"
       >
         <p className="max-w-2xl text-lg leading-8 text-muted">
