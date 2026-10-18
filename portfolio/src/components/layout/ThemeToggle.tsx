@@ -1,31 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
 type Theme = "light" | "dark";
 
-export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const currentTheme = typeof document === "undefined" ? undefined : document.documentElement.dataset.theme;
-    return currentTheme === "light" || currentTheme === "dark" ? currentTheme : "dark";
+function subscribe(onChange: () => void): () => void {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
   });
+  return () => observer.disconnect();
+}
 
-  const toggleTheme = () => {
-    const nextTheme: Theme = theme === "dark" ? "light" : "dark";
-    document.documentElement.dataset.theme = nextTheme;
-    localStorage.setItem("theme", nextTheme);
-    setTheme(nextTheme);
-  };
+function getSnapshot(): Theme {
+  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
+}
+
+function getServerSnapshot(): Theme {
+  return "dark";
+}
+
+export function ThemeToggle() {
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+
+  const toggle = useCallback(() => {
+    const next: Theme = theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      /* storage unavailable: theme still applies for this session */
+    }
+  }, [theme]);
 
   return (
     <button
       type="button"
       aria-label="Toggle color theme"
       aria-pressed={theme === "light"}
-      onClick={toggleTheme}
-      className="rounded-[var(--radius)] border border-border px-2 py-1 font-mono text-xs text-muted transition-colors hover:border-border-strong hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-accent"
+      onClick={toggle}
+      className="rounded-[var(--radius)] border border-border px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-muted transition-colors hover:text-fg"
     >
-      {theme === "dark" ? "LIGHT" : "DARK"}
+      {theme}
     </button>
   );
 }
