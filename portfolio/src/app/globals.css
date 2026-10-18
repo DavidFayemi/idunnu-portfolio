@@ -1,8 +1,8 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root,
-[data-theme="light"] {
+[data-theme='light'] {
   --bg: #fafaf9;
   --surface: #ffffff;
   --surface-2: #f4f4f5;
@@ -16,7 +16,7 @@
   color-scheme: light;
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --bg: #0a0a0b;
   --surface: #111113;
   --surface-2: #18181b;
@@ -60,36 +60,14 @@
   --max-w: 1440px;
 }
 
-html {
-  background: var(--bg);
-  color: var(--fg);
-}
-body {
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-}
-::selection {
-  background: var(--accent);
-  color: var(--bg);
-}
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
+html { background: var(--bg); color: var(--fg); }
+body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+::selection { background: var(--accent); color: var(--bg); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 @media (pointer: fine) {
-  html.has-custom-cursor,
-  html.has-custom-cursor a,
-  html.has-custom-cursor button {
-    cursor: none;
-  }
+  html.has-custom-cursor, html.has-custom-cursor a, html.has-custom-cursor button { cursor: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
